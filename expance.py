@@ -4,18 +4,18 @@ from datetime import datetime
 
 FILE_NAME = "expenses.json"
 
-def lod_exp():              #ek function define kiya
+def lod_expenses():              #ek function define kiya
     if not os.path.exists(FILE_NAME):     #cheak ki file mojud hain ya nahi ; file ke undar kuch ho ya na ho ye nahi dekhta ; if file exist tho True hoga and tab kahi list return hogi but hum empty list tab return karana chahte hain tab jab file exist na ho therefore not lagaya thaki False wali condition True ho and file exist na hone par hame ek empty list return ho   
         return[] #and agar empty list return hogi tab ye function yahi end ho jaega ; with open wala nahi chalega
     with open(FILE_NAME,"r") as f : # jab if wala skip hoga tab tab with open chalega abd data padhkar return hoga
         return json.load(f) # .lode json module ka ek function hain jo f se text read karata hain and python list banata hain  
 
-def save_exp(expenses): #lod_exp file se data read karta tha but ye data ko file main likh ta hai 
+def save_expenses(expenses): #lod_exp file se data read karta tha but ye data ko file main likh ta hai 
     with open(FILE_NAME,"w") as f:
         json.dump(expenses,f,indent=4) #.dump python list/dict ko JSON Text main badal kr f main likh deta hain
 
 
-def add_exp(expenses):
+def add_expenses(expenses):
     try: 
         amount = float(input("Amount (Rs): "))
     except ValueError: #except ke baad python main ane wale aasli erro ka naam likhan padata hain and agar error ka namm nahi pata tho only try walla part run karo wrong input se the except main likho basically pahale galti karo and then erro ka namm pata kro
@@ -38,7 +38,7 @@ expense = {
 }
 
 expenses.append(expense) #naya ban hua dictionary(expense) badi list (expenses) ke end main jod deta hain
-save_exp(expenses) # ye puri list ko expenses.json  file main likh deta hain tab jab data peremanent hota hain
+save_expenses(expenses) # ye puri list ko expenses.json  file main likh deta hain tab jab data peremanent hota hain
 print("Expense add ho gaya !")
 
 
@@ -51,3 +51,20 @@ def view_expenses(expenses):#kaam hain expenses ko saji hui table ke jase screen
         print("-" * 50)
         for e in expenses:
             print(f"{e['id']:<4}{e['date']:<12}{e['category']:<10}{e['amount']:>9.2f} {e['note']}")
+
+
+def delete_expenses(expenses):
+    try:
+        del_id = int(input("Delete karne walla ID : "))
+    except ValueError:
+        print("Galat ID !")
+        return
+    for e in expenses:
+        if e["id"]==del_id:
+            expenses.remove(e) #wo expense list d=se hata diya
+            save_expenses(expenses) #update list file main likh di, tab permanent hua
+            print("Expense delete ho gaya")
+            return
+    print("ye ID mili nahi") #ye loop ke bahar hain , ye tahbi chal ta hain jab loop pura ghum gaya aur kahi return nahi chala, yani koi expence match hua hi nahi
+#Correct ID mili ->remove->save->print->return
+#NO ID found ->loop pura ghuma ->"ye ID mili nahi"
