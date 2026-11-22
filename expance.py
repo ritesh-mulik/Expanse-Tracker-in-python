@@ -25,15 +25,18 @@ def add_exp(expenses):
     category = input("Category(food/travel/rent/other): ").strip().lower() #.strip() and .lower() ye string ko saff karne walle methodes hain .strip() string ke faltu spacese ko hathata hain " food " --> "food" beach ka space nahi hatata "best food" and .lower() "FOOD"-->"food" ,"Food"-->"food"
     note = input("Note (optional): ").strip()
 
-new_id = max([e["id"] for e in expenses], default =0) + 1
-expense = {
-    "id": new_id,
-    "date": datetime.now().strftime("%y-%m-%d"),
+ids = [e["id"] for e in expenses] #sare purane expenses main se only uunki id's nikal kr ek list banai like [1,2,3]
+biggest = max(ids, default =0) #uss list mese sabase badi id nikali ,yaha 3 hain
+new_id = biggest + 1 # uss main ek jodkar new id banai 4 
+#overall purane number dekho, unnme bada find karo, uss se agala number naye expense ko dedo
+expense = {  
+    "id": new_id,                                    #then naye expense ka dictionary banay  (id=4,date,amount,catagory,note)                                                       
+    "date": datetime.now().strftime("%y-%m-%d"),  
     "amount":amount,
     "category": category,
     "note": note,
 }
 
-expenses.append(expense)
-save_exp(expenses)
+expenses.append(expense) #naya ban hua dictionary(expense) badi list (expenses) ke end main jod deta hain
+save_exp(expenses) # ye puri list ko expenses.json  file main likh deta hain tab jab data peremanent hota hain
 print("Expense add ho gaya !")
