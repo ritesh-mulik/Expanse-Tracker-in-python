@@ -40,3 +40,14 @@ expense = {
 expenses.append(expense) #naya ban hua dictionary(expense) badi list (expenses) ke end main jod deta hain
 save_exp(expenses) # ye puri list ko expenses.json  file main likh deta hain tab jab data peremanent hota hain
 print("Expense add ho gaya !")
+
+
+def view_expenses(expenses):#kaam hain expenses ko saji hui table ke jase screen par dikhana 
+    if not expenses: # if condition agar True tabhi print hoaga , so agar list khai hain tab False there fore not False = True and then print hoga
+        print("abhi koi expence nahi hain.")
+        return #agar list khali tho message print hoga and then function end other wise if skip hoga and aage table banegi
+
+        print(f"{'ID:<4'}{'Date':<12}{'category':<10}{'amount':>9} Note")
+        print("-" * 50)
+        for e in expenses:
+            print(f"{e['id']:<4}{e['date']:<12}{e['category']:<10}{e['amount']:>9.2f} {e['note']}")
