@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "date": "26-11-22",
+        "amount": 700.0,
+        "category": "travel",
+        "note": "none"
+    },
+    {
+        "id": 2,
+        "date": "26-11-22",
+        "amount": 1500.0,
+        "category": "food",
+        "note": "none"
+    },
+    {
+        "id": 3,
+        "date": "26-11-22",
+        "amount": 700.0,
+        "category": "other",
+        "note": "none"
+    }
+]

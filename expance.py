@@ -25,21 +25,21 @@ def add_expenses(expenses):
     category = input("Category(food/travel/rent/other): ").strip().lower() #.strip() and .lower() ye string ko saff karne walle methodes hain .strip() string ke faltu spacese ko hathata hain " food " --> "food" beach ka space nahi hatata "best food" and .lower() "FOOD"-->"food" ,"Food"-->"food"
     note = input("Note (optional): ").strip()
 
-ids = [e["id"] for e in expenses] #sare purane expenses main se only uunki id's nikal kr ek list banai like [1,2,3]
-biggest = max(ids, default =0) #uss list mese sabase badi id nikali ,yaha 3 hain
-new_id = biggest + 1 # uss main ek jodkar new id banai 4 
-#overall purane number dekho, unnme bada find karo, uss se agala number naye expense ko dedo
-expense = {  
-    "id": new_id,                                    #then naye expense ka dictionary banay  (id=4,date,amount,catagory,note)                                                       
-    "date": datetime.now().strftime("%y-%m-%d"),  
-    "amount":amount,
-    "category": category,
-    "note": note,
-}
+    ids = [e["id"] for e in expenses] #sare purane expenses main se only uunki id's nikal kr ek list banai like [1,2,3]
+    biggest = max(ids, default =0) #uss list mese sabase badi id nikali ,yaha 3 hain
+    new_id = biggest + 1 # uss main ek jodkar new id banai 4 
+    #overall purane number dekho, unnme bada find karo, uss se agala number naye expense ko dedo
+    expense = {  
+        "id": new_id,                                    #then naye expense ka dictionary banay  (id=4,date,amount,catagory,note)                                                       
+        "date": datetime.now().strftime("%y-%m-%d"),  
+        "amount":amount,
+        "category": category,
+        "note": note,
+    }
 
-expenses.append(expense) #naya ban hua dictionary(expense) badi list (expenses) ke end main jod deta hain
-save_expenses(expenses) # ye puri list ko expenses.json  file main likh deta hain tab jab data peremanent hota hain
-print("Expense add ho gaya !")
+    expenses.append(expense) #naya ban hua dictionary(expense) badi list (expenses) ke end main jod deta hain
+    save_expenses(expenses) # ye puri list ko expenses.json  file main likh deta hain tab jab data peremanent hota hain
+    print("Expense add ho gaya !")
 
 
 def view_expenses(expenses):#kaam hain expenses ko saji hui table ke jase screen par dikhana 
@@ -47,10 +47,10 @@ def view_expenses(expenses):#kaam hain expenses ko saji hui table ke jase screen
         print("abhi koi expence nahi hain.")
         return #agar list khali tho message print hoga and then function end other wise if skip hoga and aage table banegi
 
-        print(f"{'ID:<4'}{'Date':<12}{'category':<10}{'amount':>9} Note")
-        print("-" * 50)
-        for e in expenses:
-            print(f"{e['id']:<4}{e['date']:<12}{e['category']:<10}{e['amount']:>9.2f} {e['note']}")
+    print(f"{'ID':<4}{'Date':<12}{'Category':<10}{'Amount':>9} Note")
+    print("-" * 50)
+    for e in expenses:
+        print(f"{e['id']:<4}{e['date']:<12}{e['category']:<10}{e['amount']:>9.2f} {e['note']}")
 
 
 def delete_expenses(expenses):
@@ -68,3 +68,49 @@ def delete_expenses(expenses):
     print("ye ID mili nahi") #ye loop ke bahar hain , ye tahbi chal ta hain jab loop pura ghum gaya aur kahi return nahi chala, yani koi expence match hua hi nahi
 #Correct ID mili ->remove->save->print->return
 #NO ID found ->loop pura ghuma ->"ye ID mili nahi"
+
+
+def show_summary(expenses):
+    if not expenses:
+        print("Summary ke liya koi data nahi hain.")
+        return
+    total = sum (e["amount"] for e in expenses)
+    by_category = {}
+    for e in expenses:
+        cat = e["category"]
+        by_category[cat] = by_category.get(cat,0) + e["amount"]
+    print(f"\nTotal kharcha: Rs {total:.2f}")
+    print("Category-wise:")
+    for cat, amt in sorted(by_category.items(), key=lambda x: x[1], reverse=True):
+        percent = amt / total * 100   
+        print(f" {cat:<10} Rs {amt:>8.2f} ({percent:.1f}%)")
+        
+        
+def main():
+   expenses = lod_expenses()
+   while True:
+        print("\n===== EXPENSE TRACKER =====")
+        print("1. Add expense")
+        print("2. View all expenses")
+        print("3. Delete expense")
+        print("4. Summary")
+        print("5. Exit")
+        choice = input("Choice (1-5): ").strip()
+        
+        if choice == "1":
+            add_expenses(expenses)
+        elif choice == "2":
+            view_expenses(expenses)
+        elif choice == "3":
+            delete_expenses(expenses)
+        elif choice == "4":
+            show_summary(expenses)
+        elif choice == "5":
+            print("Bye! Paisa sambhal ke kharch karo.")
+            break
+        else:
+            print("Galat choice, 1 se 5 ke beech daalo.")
+
+
+if __name__ == "__main__":
+    main()
