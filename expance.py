@@ -1,6 +1,7 @@
 import json
 import os 
 from datetime import datetime
+import time
 
 FILE_NAME = "expenses.json"
 
@@ -111,6 +112,6 @@ def main():
         else:
             print("Galat choice, 1 se 5 ke beech daalo.")
 
-
+        time.sleep(4)
 if __name__ == "__main__":
     main()
