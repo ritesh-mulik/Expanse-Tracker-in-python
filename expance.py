@@ -1,17 +1,17 @@
-import json
+import json #1]inbuilt module hain 
 import os 
 from datetime import datetime
 import time
 
 FILE_NAME = "expenses.json"
 
-def lod_expenses():              #ek function define kiya
+def load_expenses():              #ek function define kiya
     if not os.path.exists(FILE_NAME):     #cheak ki file mojud hain ya nahi ; file ke undar kuch ho ya na ho ye nahi dekhta ; if file exist tho True hoga and tab kahi list return hogi but hum empty list tab return karana chahte hain tab jab file exist na ho therefore not lagaya thaki False wali condition True ho and file exist na hone par hame ek empty list return ho   
         return[] #and agar empty list return hogi tab ye function yahi end ho jaega ; with open wala nahi chalega
     with open(FILE_NAME,"r") as f : # jab if wala skip hoga tab tab with open chalega abd data padhkar return hoga
-        return json.load(f) # .lode json module ka ek function hain jo f se text read karata hain and python list banata hain  
+        return json.load(f) # .loade json module ka ek function hain jo f se text read karata hain and python list banata hain  
 
-def save_expenses(expenses): #lod_exp file se data read karta tha but ye data ko file main likh ta hai 
+def save_expenses(expenses): #load_exp file se data read karta tha but ye data ko file main likh ta hai 
     with open(FILE_NAME,"w") as f:
         json.dump(expenses,f,indent=4) #.dump python list/dict ko JSON Text main badal kr f main likh deta hain
 
@@ -88,7 +88,7 @@ def show_summary(expenses):
         
         
 def main():
-   expenses = lod_expenses()
+   expenses = load_expenses()
    while True:
         print("\n===== EXPENSE TRACKER =====")
         print("1. Add expense")
